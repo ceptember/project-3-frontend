@@ -58,15 +58,18 @@ function App() {
   // THIS IS THE COMBINED SEARCH:
 
   useEffect( () => {
+    let checkedActivities = testActivities.filter( (item, index) => checkedState[index]);
+
     let nameString = "&N=" + parkSearched;
     let locationString = "&S=" + us_state;
-    let searchString = nameString + locationString
+    let activitiesString = "&A=" + checkedActivities.join(",");
+    let searchString = nameString + locationString + activitiesString
     fetch("http://localhost:9292/parks/search/"+searchString)
       .then((r) => r.json())
       .then((data) => {
-        setStateFilterResults(data)   
+        setAllFilterResults(data)   
       });
-  }, [us_state]);
+  }, [us_state, parkSearched, checkedState ]);
 
 
 
@@ -91,15 +94,8 @@ function App() {
       <h1> 0. Fetch all parks </h1>
       <div>{parks.length} total parks including {examplePark}</div>
 
-      <h1> 1. Fetch a park by name searched </h1>
-      <form>
-        <input type="text"  placeholder="search by park name" value={parkSearched} onChange={ searchParks }></input>
-      </form>
-      <p>intentionally disabled due to annoying long list, but it works</p>
-
-      <ul>
-        {/* {(parks.filter( (p) => p.name.includes(parkSearched))).map( (x) => <li>{x.name}</li>)} */}
-      </ul>     
+ 
+   
 
       <h1> 2. Fetch a park by activities </h1>
 
@@ -121,23 +117,19 @@ function App() {
       })}
     </ul>
 
-    <ul>
-    {filterResults.map((f)=> <li>{f}</li>)}
 
-    </ul>
-
-      <h1> 3. Fetch a park by location </h1>
-        <form>
-          <input type="text" value={us_state} onChange={handleLocationChange}></input>
+      <h1> Search by location and name </h1>
+        
+      <form>
+      <label for="name_input">Park Name </label>
+          <input id="name_input" type="text"  placeholder="search by park name" value={parkSearched} onChange={ searchParks }></input>
+          <label for="state_input">State </label>
+          <input id="state_input" type="text" value={us_state} onChange={handleLocationChange} maxlength="2"></input>
         </form>
 
-        <ul>
-          {stateFilterResults.map( (r) => <li>{r.name}</li>)}
-        </ul>
         
 
       <h2> RESULTS FOR ALL OF THE ABOVE: </h2>
-        goddess help me
         <ul>
           {allFilterResults.map( (result) => <li>{result.name}</li>)}
 
