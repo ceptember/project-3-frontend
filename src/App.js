@@ -1,38 +1,51 @@
 import './App.css';
 import {useState, useEffect} from "react"
+import Search from './Search';
 
 function App() {
 
   // Delete this after I get the real ones 
   const testActivities = ["Astronomy", "Picnicking", "Fishing", "Museum Exhibits"]
 
-  // These are from the form inputs 
+  // These are from the form inputs -- move to component 
   const [checkedState, setCheckedState] = useState(new Array(testActivities.length).fill(false));
   const [us_state, setUsState] = useState("")
   const [parkSearched, setParkSearched] = useState("");
 
-  // Combined search results 
+  // Combined search results -- keep in this component 
   const [allFilterResults, setAllFilterResults] = useState([])
- 
-  // THIS IS THE COMBINED SEARCH:
-  useEffect( () => {
-    let checkedActivities = testActivities.filter( (item, index) => checkedState[index]);
 
-    let nameString = "&N=" + parkSearched;
-    let locationString = "&S=" + us_state;
+  // string for searching passed up from Search
+  const [searchString, setSearchString] = useState("")
+
+  function handleSearch (activ, name, loc ) {
+    let checkedActivities = testActivities.filter( (item, index) => activ[index]);
     let activitiesString = "&A=" + checkedActivities.join(",");
-    let searchString = nameString + locationString + activitiesString
+    let nameString = "&N=" + name;
+    let locationString = "&S=" + loc;  
+    setSearchString(nameString + locationString + activitiesString )
+  };
+
+  // KEEP THIS HERE AS-IS
+  useEffect( () => {
     fetch("http://localhost:9292/parks/search/"+searchString)
       .then((r) => r.json())
       .then((data) => {
         setAllFilterResults(data)   
       });
-  }, [us_state, parkSearched, checkedState ]);
+  }, [searchString]);
+
+
+  //******************** */
 
   // Handling the filters onChange (name, state, activities)
+
+  // moving to search component
   function searchParks(e){
     setParkSearched(e.target.value)
   }
+
+    // moving to search component
 
   function handleCheckboxChange(position) {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -41,39 +54,14 @@ function App() {
     setCheckedState(updatedCheckedState);
   };
 
+  // moving to search component
   function handleLocationChange(e){
     setUsState(e.target.value)
   }
 
   return (
     <div className="App">
-      <h1> Search </h1>
-
-      <form>
-      <label for="name_input">Park Name </label>
-          <input id="name_input" type="text"  placeholder="search by park name" value={parkSearched} onChange={ searchParks }></input>
-          <label for="state_input">State </label>
-          <input id="state_input" type="text" value={us_state} onChange={handleLocationChange} maxlength="2"></input>
-     </form>
-
-        <h4>Activities:</h4>
-      <ul className="activities">
-      {testActivities.map(( name , index) => {
-        return (
-          <li key={index}>
-                <input
-                  type="checkbox"
-                  id={`custom-checkbox-${index}`}
-                  name={name}
-                  value={name}
-                  checked={checkedState[index]}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-                <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
-          </li>
-        );
-      })}
-    </ul>
+      <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
 
       <h2> RESULTS: </h2>
         <ul>
@@ -92,8 +80,16 @@ function App() {
 
 export default App;
 
+ /* ********************
 
+APP
+|
+|-- Search Page
+    |-- Search sidebar
+    |-- Results list
+|-- Park page
+    |-- Park info 
+    |-- Reviews list
+    |-- Add a review form 
 
-
-
- 
+ **********************/
