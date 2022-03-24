@@ -1,6 +1,11 @@
 import './App.css';
 import {useState, useEffect} from "react"
+import { BrowserRouter, Route } from "react-router-dom";
+
 import Search from './Search';
+import Test from './Test';
+import Results from './Results';
+
 
 function App() {
 
@@ -33,12 +38,17 @@ function App() {
 
   return (
     <div className="App">
-      <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
 
-      <h2> RESULTS: </h2>
-        <ul>
-          {allFilterResults.map( (result) => <li>{result.name} <br /> <a href={result.url}>See more</a><br /><br /></li>)}
-        </ul>
+    <Route path="/test">
+       <Test />
+    </Route>
+
+    <Route path="/">
+      <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
+      <Results allFilterResults={allFilterResults}/>
+    </Route>
+
+
     </div>
   );
 }
