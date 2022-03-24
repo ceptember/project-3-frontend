@@ -1,13 +1,21 @@
 import './App.css';
 import {useState, useEffect} from "react"
 import { BrowserRouter, Route } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 import Search from './Search';
 import Test from './Test';
 import Results from './Results';
+import Header from './Header';
+import Footer from './Footer';
+import ParkInfo from './ParkInfo';
 
 
 function App() {
+
+
+  let arr = [{id:1, name: "TEST 1"}, {id: 2, name: "TEST 2"}]   
+
 
   // NEED TO ADD THE REST OF THEM. 
   const testActivities = ["Astronomy", "Picnicking", "Fishing", "Museum Exhibits"]
@@ -38,15 +46,43 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
 
-    <Route path="/test">
-       <Test />
-    </Route>
+      {/* The search page is the index page for now, might add a Home page later */}
+      <Route exact path="/">
+        <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
+        <Results allFilterResults={allFilterResults}/>
+      </Route>
 
-    <Route path="/">
-      <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
-      <Results allFilterResults={allFilterResults}/>
-    </Route>
+      <Route path="/test">
+        <Test />
+      </Route>
+
+      {/* <Route path={"/parkinfo/"+id}>
+        <ParkInfo parkID={id}/>
+      </Route> */}
+
+      
+      {/* {
+      arr.map((p)=> {return(
+        <Route path={"/parkinfo/"+p.id} key={p.id} >
+          <ParkInfo p={p} />
+        </Route>
+      )})} */}
+      
+      
+      {
+       // THIS WORKS WHEN YOU GO THROUGH <Link /> BUT NOT WHEN YOU TYPE IT DIRECTLY 
+       allFilterResults.map((p)=> {return(
+                   <Route path={"/parkinfo/"+p.id} key={p.id} > 
+                     <ParkInfo p={p} />
+                   </Route>
+         )})}
+
+
+
+
+      <Footer />
 
 
     </div>
