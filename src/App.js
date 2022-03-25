@@ -16,15 +16,18 @@ function App() {
 
   let arr = [{id:1, name: "TEST 1"}, {id: 2, name: "TEST 2"}]   
 
-
-  // NEED TO ADD THE REST OF THEM. 
   const testActivities = ["Astronomy", "Picnicking", "Fishing", "Museum Exhibits"]
-
-  // Combined search results 
+  const [allParks, setAllParks] = useState([])
   const [allFilterResults, setAllFilterResults] = useState([])
-
-  // string for searching passed up from Search
   const [searchString, setSearchString] = useState("")
+
+  useEffect( () => {
+    fetch("http://localhost:9292/parks")
+      .then((r) => r.json())
+      .then((data) => {
+        setAllParks(data)   
+      });
+  }, []);
 
   // Processing selections passed up from Search and getting url string ready to fetch
   function handleSearch (activ, name, loc ) {
@@ -73,7 +76,7 @@ function App() {
       
       {
        // THIS WORKS WHEN YOU GO THROUGH <Link /> BUT NOT WHEN YOU TYPE IT DIRECTLY 
-       allFilterResults.map((p)=> {return(
+       allParks.map((p)=> {return(
                    <Route path={"/parkinfo/"+p.id} key={p.id} > 
                      <ParkInfo p={p} />
                    </Route>
