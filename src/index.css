@@ -16,3 +16,31 @@ code {
   width: 500px; 
   height: 200px;
 }
+
+
+#search{
+  border: 1px solid red; 
+  width: 30%; 
+  float: left; 
+}
+
+#results{
+  border: 1px solid blue; 
+  width: 60%; 
+  float: left; 
+}
+
+@media only screen and (max-width: 700px) {
+  #search{
+    width: 100%;
+  }
+
+  #results{
+    width: 100%
+  }
+
+}
+
+#footer{
+  clear: both; 
+}

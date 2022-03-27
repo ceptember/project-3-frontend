@@ -27,14 +27,15 @@ function Search({testActivities, allFilterResults, onSearchFilterChange}){
       };
 
     return (
-        <div>
+        <div id="search">
             <h1> FROM SEARCH COMPONENT</h1>
 
             <h1> Search </h1>
 
             <form>
             <label for="name_input">Park Name </label>
-                <input id="name_input" type="text"  placeholder="search by park name" value={parkSearched} onChange={ searchParks }></input>
+            <input id="name_input" type="text"  placeholder="search by park name" value={parkSearched} onChange={ searchParks }></input>
+            <br />
                 <label for="state_input">State </label>
                 <input id="state_input" type="text" value={us_state} onChange={handleLocationChange} maxlength="2"></input>
             </form>    

@@ -10,9 +10,7 @@ import Header from './Header';
 import Footer from './Footer';
 import ParkInfo from './ParkInfo';
 
-
 function App() {
-
 
   let arr = [{id:1, name: "TEST 1"}, {id: 2, name: "TEST 2"}]   
 
@@ -53,29 +51,15 @@ function App() {
 
       {/* The search page is the index page for now, might add a Home page later */}
       <Route exact path="/">
-        <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
-        <Results allFilterResults={allFilterResults}/>
+        <div id="search_page_container">
+          <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
+          <Results allFilterResults={allFilterResults}/>
+        </div>
       </Route>
 
-      <Route path="/test">
-        <Test />
-      </Route>
-
-      {/* <Route path={"/parkinfo/"+id}>
-        <ParkInfo parkID={id}/>
-      </Route> */}
-
-      
-      {/* {
-      arr.map((p)=> {return(
-        <Route path={"/parkinfo/"+p.id} key={p.id} >
-          <ParkInfo p={p} />
-        </Route>
-      )})} */}
       
       
       {
-       // THIS WORKS WHEN YOU GO THROUGH <Link /> BUT NOT WHEN YOU TYPE IT DIRECTLY 
        allParks.map((p)=> {return(
                    <Route path={"/parkinfo/"+p.id} key={p.id} > 
                      <ParkInfo p={p} />
