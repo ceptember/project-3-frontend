@@ -14,10 +14,13 @@ function App() {
 
   let arr = [{id:1, name: "TEST 1"}, {id: 2, name: "TEST 2"}]   
 
-  const testActivities = ["Astronomy", "Picnicking", "Fishing", "Museum Exhibits"]
+
+
+  const testActivities = ["Astronomy", "Birdwatching", "Camping","RV Camping","Fishing","Fly Fishing","Swimming","Kayaking", "Boat Tour","Guided Tours","Hiking","Mountain Biking","Horseback Riding","Skiing","Snowmobiling","Gift Shop and Souvenirs", "Junior Ranger Program","Museum Exhibits" ]
   const [allParks, setAllParks] = useState([])
   const [allFilterResults, setAllFilterResults] = useState([])
   const [searchString, setSearchString] = useState("")
+  const [resultsDisplay, setResultsDisplay] = useState("block")
 
   useEffect( () => {
     fetch("http://localhost:9292/parks")
@@ -45,6 +48,18 @@ function App() {
       });
   }, [searchString]);
 
+
+  // Show and hide results
+
+  function showResults(){
+    setResultsDisplay("block")
+  }
+
+  function hideResults(){
+    setResultsDisplay("none")
+  }
+
+
   return (
     <div className="App">
       <Header />
@@ -52,8 +67,8 @@ function App() {
       {/* The search page is the index page for now, might add a Home page later */}
       <Route exact path="/">
         <div id="search_page_container">
-          <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} />
-          <Results allFilterResults={allFilterResults}/>
+          <Search testActivities={testActivities} allFilterResults={allFilterResults} onSearchFilterChange={handleSearch} onShowResults={showResults} onHideResults={hideResults}/>
+          <Results allFilterResults={allFilterResults} resultsDisplay={resultsDisplay}/>
         </div>
       </Route>
 

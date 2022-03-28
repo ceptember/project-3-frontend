@@ -1,11 +1,14 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 
-function Search({testActivities, allFilterResults, onSearchFilterChange}){
+function Search({testActivities, allFilterResults, onSearchFilterChange, onShowResults, onHideResults}){
 
     const [checkedState, setCheckedState] = useState(new Array(testActivities.length).fill(false));
     const [us_state, setUsState] = useState("")
     const [parkSearched, setParkSearched] = useState("");
+    const [filterBtnVis, setFilterBtnVis] = useState("hidden")
+    const [filterContainerDis, setFilterContainerDis] = useState("block")
+    const [searchClass, setSearchClass] = useState("search_normal")
 
     useEffect( ()=>{
         onSearchFilterChange(checkedState, parkSearched, us_state)
@@ -26,10 +29,24 @@ function Search({testActivities, allFilterResults, onSearchFilterChange}){
         setCheckedState(updatedCheckedState);
       };
 
-    return (
-        <div id="search">
-            <h1> FROM SEARCH COMPONENT</h1>
+      function showResults(){
+        setFilterBtnVis("visible");
+        setFilterContainerDis("none");
+        setSearchClass("search_hidden")
+        onShowResults(); 
+      }
 
+      function showFilters(){
+        setFilterContainerDis("block");
+        setFilterBtnVis("hidden")
+        setSearchClass("search_normal"); 
+        onHideResults(); 
+      }
+
+
+    return (
+        <div id="search" className={searchClass}>
+          <div id="filters_container" style={{display: filterContainerDis}}>
             <h1> Search </h1>
 
             <form>
@@ -59,8 +76,13 @@ function Search({testActivities, allFilterResults, onSearchFilterChange}){
       })}
     </ul>
 
+    <button id="showResultsButton" onClick={showResults}> Show Results </button>
 
         </div>
+
+        <button style={{visibility: filterBtnVis}} onClick={showFilters}>Filter</button>
+  </div>
+
     )
 }
 

@@ -5,13 +5,21 @@ import Review from "./Review";
 
 function ParkInfo({p}){
 
+    const [activities, setActivities] = useState([]); 
     const [reviews, setReviews] = useState([]);
     const [reviewTextArea, setReviewTextArea] = useState("")
+    
 
     useEffect( ()=>{
         fetch("http://localhost:9292/parks/"+p.id+"/reviews")
         .then((r) => r.json())
         .then((data) => {setReviews(data)})
+    },[])
+
+    useEffect( ()=> {
+      fetch("http://localhost:9292/parks/"+p.id+"/activities")
+      .then((r) => r.json())
+      .then((data) => {setActivities(data)})
     },[])
 
     function handleSubmit(e){
@@ -70,16 +78,24 @@ function ParkInfo({p}){
         <div>
             <Link className='link' to={"/"}>BACK</Link>
             <h1>{p.name}</h1>
-            
-            <a href = {p.url} target="_blank">more info ↗</a>
+            <h3>{p.city}, {p.state}</h3>
+            <h2>About</h2>
+            <p class="park_description">{p.description}</p>
+            <br />
+            <h2>Things to Do</h2>
+            <ul >
+              {activities.map( (act) => <li key={act.name} style={{marginLeft: '-40px'}}>{act.name}</li>)}
+            </ul>
+            <h2> More Info</h2>
+            <a href = {p.url} target="_blank">Official Park Page ↗</a>
 
-            <h4>Reviews</h4>
+            <h2>Reviews</h2>
             { reviews.map( (r) => <Review review={r} deleteReview={deleteReview} editReview={editReview}/> ) }
             
             <br />
 
             <div id="comment-form">
-                <h4>Submit a Review</h4>
+                <h2>Submit a Review</h2>
                 <form onSubmit={handleSubmit} >
                     <textarea class="review-textarea" value={reviewTextArea} onChange={handleChange} ></textarea>
                     <br />

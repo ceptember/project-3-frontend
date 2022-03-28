@@ -2,8 +2,8 @@ import React from "react";
 
 function Header(){
     return(
-        <div>
-            <h1>PARK FINDER!!</h1>
+        <div id="header">
+            <h1>parkfinder</h1><span> a searchable National Park database </span>
         </div>
     )
 }
