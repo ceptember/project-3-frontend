@@ -21,6 +21,7 @@ function App() {
   const [allFilterResults, setAllFilterResults] = useState([])
   const [searchString, setSearchString] = useState("")
   const [resultsDisplay, setResultsDisplay] = useState("block")
+  const [user, setUser] = useState({name: "test_user", id: 253})
 
   useEffect( () => {
     fetch("http://localhost:9292/parks")
@@ -62,7 +63,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header user={user} />
 
       {/* The search page is the index page for now, might add a Home page later */}
       <Route exact path="/">
@@ -77,7 +78,7 @@ function App() {
       {
        allParks.map((p)=> {return(
                    <Route path={"/parkinfo/"+p.id} key={p.id} > 
-                     <ParkInfo p={p} />
+                     <ParkInfo p={p} user={user} />
                    </Route>
          )})}
 

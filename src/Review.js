@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from "react";
 
-function Review({review, deleteReview, editReview}){
+function Review({review, deleteReview, editReview,user}){
 
     const [vis, setVis] = useState("hidden")
     const [textToEdit, setTextToEdit] = useState(review.review_text)
@@ -36,8 +36,7 @@ return(
     <div id ={review.id}  >
         {review.user_name} <br />
         {review.review_text}
-        {/* CHANGE USER IDEA SITUATION  */}
-        {review.user_id == 203 ? <div> <button id="delete" onClick={handleDelete}>Delete</button> <button onClick={handleEdit}>Edit</button></div> : "" }
+        {review.user_id == user.id ? <div> <button id="delete" onClick={handleDelete}>Delete</button> <button onClick={handleEdit}>Edit</button></div> : "" }
         <form style={{visibility: vis }}> 
             <textarea value={textToEdit} onChange={(e) => setTextToEdit(e.target.value)}> </textarea>
             <br />

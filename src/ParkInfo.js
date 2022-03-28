@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link} from "react-router-dom";
 import Review from "./Review";
 
-function ParkInfo({p}){
+function ParkInfo({p, user}){
 
     const [activities, setActivities] = useState([]); 
     const [reviews, setReviews] = useState([]);
@@ -27,7 +27,7 @@ function ParkInfo({p}){
 
         let reviewObj = {
             park_id: p.id,
-            user_id: 203, // change this 
+            user_id: user.id, 
             likes: 0,
             review_text: reviewTextArea
         }
@@ -42,8 +42,7 @@ function ParkInfo({p}){
           .then( (r) => r.json() )
           .then( (data) => {
               let newObj = data
-              // Change this eventually 
-              newObj.user_name = "Ms_Cleotilde_Wiza"
+              newObj.user_name = user.name;
               setReviews([...reviews, newObj])})
 
         setReviewTextArea("")
@@ -68,15 +67,13 @@ function ParkInfo({p}){
           .then( (r) => r.json() )
           .then (data => { 
             let newObj = data;   
-            // Change this eventually 
-            newObj.user_name = "Ms_Cleotilde_Wiza"
+            newObj.user_name = user.name;
             setReviews([...reviews.filter( (rev)=> rev.id != data.id), newObj ])
           })
     }
 
     return(
         <div>
-            <Link className='link' to={"/"}>BACK</Link>
             <h1>{p.name}</h1>
             <h3>{p.city}, {p.state}</h3>
             <h2>About</h2>
@@ -90,7 +87,7 @@ function ParkInfo({p}){
             <a href = {p.url} target="_blank">Official Park Page ↗</a>
 
             <h2>Reviews</h2>
-            { reviews.map( (r) => <Review review={r} deleteReview={deleteReview} editReview={editReview}/> ) }
+            { reviews.map( (r) => <Review review={r} deleteReview={deleteReview} editReview={editReview} user={user}/> ) }
             
             <br />
 
@@ -101,7 +98,6 @@ function ParkInfo({p}){
                     <br />
                     <input type="submit"></input>
                 </form >
-                {reviewTextArea}
 
             </div>
         </div>

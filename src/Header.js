@@ -1,9 +1,12 @@
 import React from "react";
+import { Link} from "react-router-dom";
 
-function Header(){
+
+function Header({user}){
     return(
         <div id="header">
-            <h1>parkfinder</h1><span> a searchable National Park database </span>
+            <Link className='link' to={"/"} style={{textDecoration: 'none'}}><h1>parkfinder</h1></Link><span> a searchable National Park database </span>
+            <span style={{float: 'right', paddingRight: '10px', paddingTop: '17px'}}>{"Hello, " + user.name + "!"}</span>
         </div>
     )
 }
