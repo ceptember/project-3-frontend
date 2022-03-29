@@ -96,7 +96,7 @@ function ParkInfo({p, user}){
                 <form onSubmit={handleSubmit} >
                     <textarea class="review-textarea" value={reviewTextArea} onChange={handleChange} ></textarea>
                     <br />
-                    <input type="submit"></input>
+                    <input type="submit" className="review_btn"></input>
                 </form >
 
             </div>

@@ -84,6 +84,45 @@ li {
   width: 70%
 }
 
+.review_btn{
+  color: #fff; 
+  background-color: #C3CA8A; 
+  padding: 5px; 
+  margin-top: 5px; 
+  margin-bottom: 5px; 
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid #768B67; 
+}
+
+.userName {
+  font-weight: bold;
+}
+
+.reviewCard{
+  background-color: #fff; 
+  width: 50%;
+  margin: auto; 
+  margin-top: 10px; 
+  padding: 50px 50px 50px 50px; 
+  border: 1px solid #EDD8CA; 
+  border-radius:3px; 
+
+  text-align:left; 
+}
+
+
+@media only screen and (max-width: 700px) {
+  .reviewCard{
+     width: 96%;
+  }
+}
+
+.edit_textarea {
+  width: 400px; 
+  height: 150px;
+}
+
 #App{
   z-index: 0;
 }

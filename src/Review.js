@@ -3,7 +3,7 @@ import {useState} from "react";
 
 function Review({review, deleteReview, editReview,user}){
 
-    const [vis, setVis] = useState("hidden")
+    const [dis, setDis] = useState("none")
     const [textToEdit, setTextToEdit] = useState(review.review_text)
 
 
@@ -16,12 +16,12 @@ function handleEdit(e){
     let url = "http://localhost:9292/reviews/" + e.target.parentNode.parentNode.id
     let textArea = e.target.parentNode.parentNode.childNodes[2].childNodes[0]
     console.log(textArea)
-    setVis("visible")
+    setDis("block")
 }
 
 function handleCancel(e){
     e.preventDefault()
-    setVis("hidden")
+    setDis("none")
 }
 
 function handleEditSubmit(e){
@@ -29,18 +29,18 @@ function handleEditSubmit(e){
     let url = "http://localhost:9292/reviews/" + e.target.parentNode.parentNode.id
     let reviewObj = {review_text: textToEdit }
     editReview(url, reviewObj)
-    setVis("hidden")
+    setDis("none")
 }
 
 return(
-    <div id ={review.id}  >
-        {review.user_name} <br />
+    <div id ={review.id}  className="reviewCard">
+        <span className="userName"> {review.user_name} </span><br />
         {review.review_text}
-        {review.user_id == user.id ? <div> <button id="delete" onClick={handleDelete}>Delete</button> <button onClick={handleEdit}>Edit</button></div> : "" }
-        <form style={{visibility: vis }}> 
-            <textarea value={textToEdit} onChange={(e) => setTextToEdit(e.target.value)}> </textarea>
+        {review.user_id == user.id ? <div> <button id="delete" onClick={handleDelete} className="review_btn">Delete</button> <button onClick={handleEdit} className="review_btn">Edit</button></div> : "" }
+        <form style={{display: dis }}> 
+            <textarea className="edit_textarea" value={textToEdit} onChange={(e) => setTextToEdit(e.target.value)}> </textarea>
             <br />
-            <button onClick={handleEditSubmit}>submit </button> <button onClick={handleCancel}>cancel</button>
+            <button onClick={handleEditSubmit} className="review_btn">submit </button> <button onClick={handleCancel} className="review_btn">cancel</button>
             <br />
         </form>
     </div>  
