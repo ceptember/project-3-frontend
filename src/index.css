@@ -37,6 +37,10 @@ li {
   list-style: none
 }
 
+a {
+  text-decoration: none;
+}
+
 .review-textarea {
   width: 500px; 
   height: 200px;
@@ -95,6 +99,22 @@ li {
   border: 1px solid #768B67; 
 }
 
+#showFiltersButton, #showResultsButton {
+  background-color: #C3CA8A; 
+}
+
+#showFiltersButton {
+  transform: rotate(270deg);
+  position: fixed; 
+  left: -30px; 
+  top: 250px; 
+  width: 100px;
+  height: 30px;
+  margin: 0px;
+  font-size: 13pt;
+}
+
+
 .userName {
   font-weight: bold;
 }
@@ -141,7 +161,6 @@ li {
   margin-top: 0px; 
   display: inline;
 }
-
 
 #search{
   width: 30%; 
@@ -193,12 +212,12 @@ li {
     width: 100%;
     position: relative;
     margin-top: 50px; 
+    padding-bottom: 50px;
   }
 
   #results{
     width: 100%;
     margin-left: 5px;
-    
   }
 
   #showResultsButton{
@@ -213,6 +232,13 @@ li {
   position: relative; 
   background-color: #C3CA8A; 
   height: 100px; 
-  
+  padding-top: 25px;
+}
 
+#footer p{
+  margin: 1px;
+}
+
+#footer a {
+  color: #768B67;
 }

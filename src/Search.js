@@ -80,7 +80,7 @@ function Search({testActivities, allFilterResults, onSearchFilterChange, onShowR
 
         </div>
 
-        <button style={{visibility: filterBtnVis}} onClick={showFilters}>Filter</button>
+        <button id="showFiltersButton" style={{visibility: filterBtnVis}} onClick={showFilters}>Filter</button>
   </div>
 
     )
